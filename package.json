@@ -1,0 +1,21 @@
+{
+  "name": "bible-home-run",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsdown && node scripts/copy-public.js",
+    "build:watch": "tsdown --watch",
+    "start": "node dist/server/index.js",
+    "dev": "npm run build && npm start"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.5",
+    "@types/ws": "^8.5.13",
+    "tsdown": "^0.12.5",
+    "typescript": "^5.7.3"
+  }
+}

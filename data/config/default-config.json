@@ -1,0 +1,15 @@
+{
+  "teamsCount": 2,
+  "playersPerTeam": 1,
+  "totalQuestions": 20,
+  "buzzerTimeLimit": 5,
+  "answerTimeLimit": 10,
+  "language": "zh",
+  "correctOutcomes": {
+    "single": 0.40,
+    "double": 0.25,
+    "triple": 0.10,
+    "homerun": 0.10,
+    "walk": 0.15
+  }
+}
