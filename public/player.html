@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>聖經全壘打 - 玩家</title>
+  <link rel="stylesheet" href="/styles/player.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Join Screen -->
+    <div id="join-screen" class="screen active">
+      <h1 id="game-title">聖經全壘打</h1>
+      <div id="join-form">
+        <input type="text" id="player-name" placeholder="輸入你的名字" maxlength="20" autocomplete="off" />
+        <button id="btn-join">加入遊戲</button>
+        <div id="join-error" class="hidden"></div>
+      </div>
+      <button id="btn-lang" class="lang-btn">EN</button>
+    </div>
+
+    <!-- Waiting Screen -->
+    <div id="waiting-screen" class="screen">
+      <h2 id="player-welcome"></h2>
+      <p id="wait-text">等待遊戲開始...</p>
+      <div id="team-info"></div>
+    </div>
+
+    <!-- Buzzer Screen -->
+    <div id="buzzer-screen" class="screen">
+      <div id="buzzer-question"></div>
+      <div id="buzzer-timer">
+        <div id="buzzer-timer-fill"></div>
+      </div>
+      <button id="btn-buzz">搶答！</button>
+    </div>
+
+    <!-- Answer Screen -->
+    <div id="answer-screen" class="screen">
+      <h2 id="your-turn-text">輪到你回答！</h2>
+      <div id="answer-choices"></div>
+      <div id="answer-timer">
+        <div id="answer-timer-fill"></div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="screen">
+      <div id="player-result-icon"></div>
+      <div id="player-result-text"></div>
+      <div id="player-outcome-text"></div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="player-gameover-screen" class="screen">
+      <h1 id="player-gameover-title">比賽結束</h1>
+      <div id="player-final-scores"></div>
+    </div>
+  </div>
+
+  <script src="/js/player.iife.js"></script>
+</body>
+</html>

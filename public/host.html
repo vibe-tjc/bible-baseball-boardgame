@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聖經全壘打 - Bible Home Run</title>
+  <link rel="stylesheet" href="/styles/host.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Lobby Screen -->
+    <div id="lobby-screen" class="screen active">
+      <h1 id="game-title">聖經全壘打</h1>
+      <div id="qr-container">
+        <img id="qr-code" alt="QR Code" />
+        <p id="scan-text">掃描 QR Code 加入遊戲</p>
+        <p id="join-url"></p>
+      </div>
+      <div id="players-list">
+        <h3 id="waiting-text">等待玩家加入...</h3>
+        <div id="teams-container"></div>
+      </div>
+      <div id="lobby-controls">
+        <button id="btn-start" disabled>開始遊戲</button>
+        <button id="btn-settings">設定</button>
+        <button id="btn-lang-toggle">EN</button>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+      <div id="game-header">
+        <div id="scoreboard"></div>
+        <div id="question-counter"></div>
+        <button id="btn-lang-toggle-game" class="lang-toggle">EN</button>
+      </div>
+      <div id="field-container">
+        <canvas id="baseball-field"></canvas>
+        <canvas id="animation-layer"></canvas>
+      </div>
+      <div id="question-overlay" class="hidden">
+        <div id="question-text"></div>
+        <div id="answer-choices"></div>
+        <div id="timer-bar"><div id="timer-fill"></div></div>
+      </div>
+      <div id="result-overlay" class="hidden">
+        <div id="result-text"></div>
+        <div id="outcome-text"></div>
+      </div>
+      <div id="host-controls">
+        <button id="btn-next" class="hidden">下一題</button>
+      </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameover-screen" class="screen">
+      <h1 id="gameover-title">比賽結束</h1>
+      <div id="final-scores"></div>
+      <div id="gameover-controls">
+        <button id="btn-new-game">新遊戲</button>
+      </div>
+    </div>
+
+    <!-- Settings Panel (overlay) -->
+    <div id="settings-panel" class="panel hidden">
+      <div class="panel-content">
+        <h2 id="settings-title">設定</h2>
+        <div class="setting-group">
+          <label id="lbl-total-q">題目數量</label>
+          <input type="number" id="cfg-total-questions" min="1" max="100" value="20" />
+        </div>
+        <div class="setting-group">
+          <label id="lbl-buzzer-time">搶答時間（秒）</label>
+          <input type="number" id="cfg-buzzer-time" min="1" max="60" value="5" />
+        </div>
+        <div class="setting-group">
+          <label id="lbl-answer-time">答題時間（秒）</label>
+          <input type="number" id="cfg-answer-time" min="1" max="60" value="10" />
+        </div>
+        <div class="setting-group">
+          <label id="lbl-players-per-team">每隊人數</label>
+          <input type="number" id="cfg-players-per-team" min="1" max="10" value="1" />
+        </div>
+        <h3 id="lbl-probabilities">打擊結果機率</h3>
+        <div class="setting-group">
+          <label>一壘安打 (Single)</label>
+          <input type="number" id="cfg-prob-single" min="0" max="1" step="0.05" value="0.40" />
+        </div>
+        <div class="setting-group">
+          <label>二壘安打 (Double)</label>
+          <input type="number" id="cfg-prob-double" min="0" max="1" step="0.05" value="0.25" />
+        </div>
+        <div class="setting-group">
+          <label>三壘安打 (Triple)</label>
+          <input type="number" id="cfg-prob-triple" min="0" max="1" step="0.05" value="0.10" />
+        </div>
+        <div class="setting-group">
+          <label>全壘打 (Home Run)</label>
+          <input type="number" id="cfg-prob-homerun" min="0" max="1" step="0.05" value="0.10" />
+        </div>
+        <div class="setting-group">
+          <label>保送 (Walk)</label>
+          <input type="number" id="cfg-prob-walk" min="0" max="1" step="0.05" value="0.15" />
+        </div>
+        <div class="panel-buttons">
+          <button id="btn-save-config">儲存</button>
+          <button id="btn-reset-config">重設</button>
+          <button id="btn-close-settings">關閉</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Question Panel (overlay) -->
+    <div id="live-question-panel" class="panel hidden">
+      <div class="panel-content">
+        <h2 id="live-q-title">即時出題</h2>
+        <div class="setting-group">
+          <label>題目（中文）</label>
+          <input type="text" id="live-q-zh" placeholder="輸入題目..." />
+        </div>
+        <div class="setting-group">
+          <label>Question (English)</label>
+          <input type="text" id="live-q-en" placeholder="Enter question..." />
+        </div>
+        <div id="live-answers">
+          <div class="live-answer-row">
+            <input type="text" class="live-ans-zh" placeholder="答案 1（中）" />
+            <input type="text" class="live-ans-en" placeholder="Answer 1 (EN)" />
+            <label><input type="radio" name="correct-ans" value="0" checked /> 正確</label>
+          </div>
+          <div class="live-answer-row">
+            <input type="text" class="live-ans-zh" placeholder="答案 2（中）" />
+            <input type="text" class="live-ans-en" placeholder="Answer 2 (EN)" />
+            <label><input type="radio" name="correct-ans" value="1" /> 正確</label>
+          </div>
+          <div class="live-answer-row">
+            <input type="text" class="live-ans-zh" placeholder="答案 3（中）" />
+            <input type="text" class="live-ans-en" placeholder="Answer 3 (EN)" />
+            <label><input type="radio" name="correct-ans" value="2" /> 正確</label>
+          </div>
+          <div class="live-answer-row">
+            <input type="text" class="live-ans-zh" placeholder="答案 4（中）" />
+            <input type="text" class="live-ans-en" placeholder="Answer 4 (EN)" />
+            <label><input type="radio" name="correct-ans" value="3" /> 正確</label>
+          </div>
+        </div>
+        <div class="panel-buttons">
+          <button id="btn-submit-live-q">送出題目</button>
+          <button id="btn-close-live-q">關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/host.iife.js"></script>
+</body>
+</html>

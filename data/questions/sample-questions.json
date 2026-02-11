@@ -1,0 +1,224 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "text": { "zh": "亞伯拉罕的妻子叫什麼名字？", "en": "What was Abraham's wife's name?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "撒拉", "en": "Sarah" }, "correct": true },
+        { "id": 2, "text": { "zh": "利百加", "en": "Rebekah" }, "correct": false },
+        { "id": 3, "text": { "zh": "拉結", "en": "Rachel" }, "correct": false },
+        { "id": 4, "text": { "zh": "利亞", "en": "Leah" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q2",
+      "text": { "zh": "挪亞方舟停在哪座山上？", "en": "On which mountain did Noah's Ark rest?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "西奈山", "en": "Mount Sinai" }, "correct": false },
+        { "id": 2, "text": { "zh": "亞拉臘山", "en": "Mount Ararat" }, "correct": true },
+        { "id": 3, "text": { "zh": "橄欖山", "en": "Mount of Olives" }, "correct": false },
+        { "id": 4, "text": { "zh": "何烈山", "en": "Mount Horeb" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q3",
+      "text": { "zh": "耶穌的第一個神蹟是什麼？", "en": "What was Jesus' first miracle?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "五餅二魚", "en": "Feeding the 5000" }, "correct": false },
+        { "id": 2, "text": { "zh": "水面行走", "en": "Walking on water" }, "correct": false },
+        { "id": 3, "text": { "zh": "水變成酒", "en": "Turning water into wine" }, "correct": true },
+        { "id": 4, "text": { "zh": "醫治瞎子", "en": "Healing a blind man" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q4",
+      "text": { "zh": "摩西帶領以色列人過的是哪片海？", "en": "Which sea did Moses part for the Israelites?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "地中海", "en": "Mediterranean Sea" }, "correct": false },
+        { "id": 2, "text": { "zh": "死海", "en": "Dead Sea" }, "correct": false },
+        { "id": 3, "text": { "zh": "加利利海", "en": "Sea of Galilee" }, "correct": false },
+        { "id": 4, "text": { "zh": "紅海", "en": "Red Sea" }, "correct": true }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q5",
+      "text": { "zh": "十誡是在哪座山上頒布的？", "en": "On which mountain were the Ten Commandments given?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "西奈山", "en": "Mount Sinai" }, "correct": true },
+        { "id": 2, "text": { "zh": "迦密山", "en": "Mount Carmel" }, "correct": false },
+        { "id": 3, "text": { "zh": "錫安山", "en": "Mount Zion" }, "correct": false },
+        { "id": 4, "text": { "zh": "他泊山", "en": "Mount Tabor" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q6",
+      "text": { "zh": "大衛王用什麼武器打敗歌利亞？", "en": "What weapon did David use to defeat Goliath?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "弓箭", "en": "Bow and arrow" }, "correct": false },
+        { "id": 2, "text": { "zh": "機弦和石子", "en": "Sling and stone" }, "correct": true },
+        { "id": 3, "text": { "zh": "刀劍", "en": "Sword" }, "correct": false },
+        { "id": 4, "text": { "zh": "長矛", "en": "Spear" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q7",
+      "text": { "zh": "耶穌有幾個門徒？", "en": "How many disciples did Jesus have?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "7", "en": "7" }, "correct": false },
+        { "id": 2, "text": { "zh": "10", "en": "10" }, "correct": false },
+        { "id": 3, "text": { "zh": "12", "en": "12" }, "correct": true },
+        { "id": 4, "text": { "zh": "15", "en": "15" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q8",
+      "text": { "zh": "聖經中誰被大魚吞了三天三夜？", "en": "Who was swallowed by a great fish for three days?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "以利亞", "en": "Elijah" }, "correct": false },
+        { "id": 2, "text": { "zh": "約拿", "en": "Jonah" }, "correct": true },
+        { "id": 3, "text": { "zh": "但以理", "en": "Daniel" }, "correct": false },
+        { "id": 4, "text": { "zh": "彼得", "en": "Peter" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q9",
+      "text": { "zh": "耶穌出生在哪個城市？", "en": "In which city was Jesus born?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "拿撒勒", "en": "Nazareth" }, "correct": false },
+        { "id": 2, "text": { "zh": "耶路撒冷", "en": "Jerusalem" }, "correct": false },
+        { "id": 3, "text": { "zh": "伯利恆", "en": "Bethlehem" }, "correct": true },
+        { "id": 4, "text": { "zh": "迦百農", "en": "Capernaum" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q10",
+      "text": { "zh": "創世記中，上帝用幾天創造世界？", "en": "In Genesis, how many days did God take to create the world?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "5天", "en": "5 days" }, "correct": false },
+        { "id": 2, "text": { "zh": "6天", "en": "6 days" }, "correct": true },
+        { "id": 3, "text": { "zh": "7天", "en": "7 days" }, "correct": false },
+        { "id": 4, "text": { "zh": "3天", "en": "3 days" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q11",
+      "text": { "zh": "誰出賣了耶穌？", "en": "Who betrayed Jesus?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "彼得", "en": "Peter" }, "correct": false },
+        { "id": 2, "text": { "zh": "猶大", "en": "Judas" }, "correct": true },
+        { "id": 3, "text": { "zh": "多馬", "en": "Thomas" }, "correct": false },
+        { "id": 4, "text": { "zh": "約翰", "en": "John" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q12",
+      "text": { "zh": "但以理被丟進什麼地方？", "en": "Where was Daniel thrown into?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "火窯", "en": "Fiery furnace" }, "correct": false },
+        { "id": 2, "text": { "zh": "獅子坑", "en": "Lion's den" }, "correct": true },
+        { "id": 3, "text": { "zh": "監獄", "en": "Prison" }, "correct": false },
+        { "id": 4, "text": { "zh": "深井", "en": "Deep well" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q13",
+      "text": { "zh": "聖經的最後一卷書是什麼？", "en": "What is the last book of the Bible?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "猶大書", "en": "Jude" }, "correct": false },
+        { "id": 2, "text": { "zh": "啟示錄", "en": "Revelation" }, "correct": true },
+        { "id": 3, "text": { "zh": "約翰三書", "en": "3 John" }, "correct": false },
+        { "id": 4, "text": { "zh": "瑪拉基書", "en": "Malachi" }, "correct": false }
+      ],
+      "category": "General"
+    },
+    {
+      "id": "q14",
+      "text": { "zh": "以色列有幾個支派？", "en": "How many tribes of Israel were there?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "10", "en": "10" }, "correct": false },
+        { "id": 2, "text": { "zh": "12", "en": "12" }, "correct": true },
+        { "id": 3, "text": { "zh": "7", "en": "7" }, "correct": false },
+        { "id": 4, "text": { "zh": "14", "en": "14" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q15",
+      "text": { "zh": "保羅原本的名字是什麼？", "en": "What was Paul's original name?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "西門", "en": "Simon" }, "correct": false },
+        { "id": 2, "text": { "zh": "掃羅", "en": "Saul" }, "correct": true },
+        { "id": 3, "text": { "zh": "巴拿巴", "en": "Barnabas" }, "correct": false },
+        { "id": 4, "text": { "zh": "提摩太", "en": "Timothy" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q16",
+      "text": { "zh": "誰建造了所羅門聖殿？", "en": "Who built Solomon's Temple?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "大衛", "en": "David" }, "correct": false },
+        { "id": 2, "text": { "zh": "所羅門", "en": "Solomon" }, "correct": true },
+        { "id": 3, "text": { "zh": "摩西", "en": "Moses" }, "correct": false },
+        { "id": 4, "text": { "zh": "尼希米", "en": "Nehemiah" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q17",
+      "text": { "zh": "耶穌在哪裡受洗？", "en": "Where was Jesus baptized?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "加利利海", "en": "Sea of Galilee" }, "correct": false },
+        { "id": 2, "text": { "zh": "約旦河", "en": "Jordan River" }, "correct": true },
+        { "id": 3, "text": { "zh": "紅海", "en": "Red Sea" }, "correct": false },
+        { "id": 4, "text": { "zh": "死海", "en": "Dead Sea" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q18",
+      "text": { "zh": "聖經中誰的力氣在頭髮裡？", "en": "Whose strength was in his hair?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "參孫", "en": "Samson" }, "correct": true },
+        { "id": 2, "text": { "zh": "以掃", "en": "Esau" }, "correct": false },
+        { "id": 3, "text": { "zh": "押沙龍", "en": "Absalom" }, "correct": false },
+        { "id": 4, "text": { "zh": "基甸", "en": "Gideon" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q19",
+      "text": { "zh": "四福音書是哪四卷？", "en": "Which are the four Gospels?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "馬太、馬可、路加、約翰", "en": "Matthew, Mark, Luke, John" }, "correct": true },
+        { "id": 2, "text": { "zh": "馬太、路加、使徒、約翰", "en": "Matthew, Luke, Acts, John" }, "correct": false },
+        { "id": 3, "text": { "zh": "創世、出埃及、利未、民數", "en": "Genesis, Exodus, Leviticus, Numbers" }, "correct": false },
+        { "id": 4, "text": { "zh": "馬太、馬可、提摩太、約翰", "en": "Matthew, Mark, Timothy, John" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q20",
+      "text": { "zh": "聖經共有幾卷書？", "en": "How many books are in the Bible?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "39", "en": "39" }, "correct": false },
+        { "id": 2, "text": { "zh": "66", "en": "66" }, "correct": true },
+        { "id": 3, "text": { "zh": "72", "en": "72" }, "correct": false },
+        { "id": 4, "text": { "zh": "27", "en": "27" }, "correct": false }
+      ],
+      "category": "General"
+    }
+  ]
+}

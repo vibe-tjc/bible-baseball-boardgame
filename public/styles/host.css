@@ -1,0 +1,512 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #1a472a;
+  color: #fff;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.screen {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.screen.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ─── Lobby ─── */
+
+#lobby-screen {
+  background: linear-gradient(135deg, #1a472a 0%, #2d5a3f 100%);
+  gap: 20px;
+}
+
+#game-title {
+  font-size: 3rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+#qr-container {
+  text-align: center;
+}
+
+#qr-code {
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+#scan-text {
+  margin-top: 8px;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+#join-url {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+#players-list {
+  text-align: center;
+}
+
+#teams-container {
+  display: flex;
+  gap: 40px;
+  margin-top: 12px;
+}
+
+.team-column {
+  min-width: 150px;
+}
+
+.team-column h4 {
+  font-size: 1.2rem;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.team-column .player-name {
+  padding: 4px 0;
+  opacity: 0.9;
+}
+
+#lobby-controls {
+  display: flex;
+  gap: 12px;
+}
+
+button {
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#btn-start {
+  background: #e74c3c;
+  color: #fff;
+  font-size: 1.3rem;
+  padding: 16px 40px;
+}
+
+#btn-settings {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+#btn-lang-toggle,
+#btn-lang-toggle-game {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+
+.lang-toggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+/* ─── Game Screen ─── */
+
+#game-screen {
+  background: #1a472a;
+  flex-direction: column;
+}
+
+#game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 20px;
+  background: rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+#scoreboard {
+  display: flex;
+  gap: 30px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.team-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.team-score .team-name {
+  opacity: 0.8;
+}
+
+.team-score .score-value {
+  font-size: 2rem;
+  color: #f1c40f;
+}
+
+#question-counter {
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+#field-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+#baseball-field,
+#animation-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#animation-layer {
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ─── Question Overlay ─── */
+
+#question-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.85);
+  padding: 24px;
+  z-index: 20;
+  backdrop-filter: blur(8px);
+}
+
+#question-text {
+  font-size: 1.6rem;
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+#answer-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.answer-choice {
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.answer-choice.correct {
+  background: #27ae60;
+}
+
+.answer-choice.wrong {
+  background: #e74c3c;
+}
+
+#timer-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+
+#timer-fill {
+  height: 100%;
+  background: #f1c40f;
+  border-radius: 3px;
+  transition: width 0.1s linear;
+  width: 100%;
+}
+
+#timer-fill.urgent {
+  background: #e74c3c;
+}
+
+/* ─── Result Overlay ─── */
+
+#result-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+  text-align: center;
+}
+
+#result-text {
+  font-size: 2rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+}
+
+#outcome-text {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-top: 12px;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+}
+
+.outcome-homerun { color: #f1c40f; }
+.outcome-triple { color: #e67e22; }
+.outcome-double { color: #3498db; }
+.outcome-single { color: #2ecc71; }
+.outcome-walk { color: #95a5a6; }
+.outcome-strikeout { color: #e74c3c; }
+
+#host-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 25;
+}
+
+#btn-next {
+  background: #3498db;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+/* ─── Game Over ─── */
+
+#gameover-screen {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  gap: 30px;
+}
+
+#gameover-title {
+  font-size: 3rem;
+}
+
+#final-scores {
+  display: flex;
+  gap: 60px;
+}
+
+.final-team {
+  text-align: center;
+}
+
+.final-team .team-name {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.final-team .final-score {
+  font-size: 5rem;
+  font-weight: 900;
+  color: #f1c40f;
+}
+
+.final-team.winner {
+  transform: scale(1.1);
+}
+
+.final-team.winner .team-name::after {
+  content: ' 🏆';
+}
+
+#btn-new-game {
+  background: #e74c3c;
+  color: #fff;
+  font-size: 1.3rem;
+  padding: 16px 40px;
+}
+
+/* ─── Settings & Live Question Panels ─── */
+
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.panel-content {
+  background: #2c3e50;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.panel-content h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.panel-content h3 {
+  margin: 16px 0 8px;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.setting-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.setting-group label {
+  font-size: 0.95rem;
+}
+
+.setting-group input[type="number"],
+.setting-group input[type="text"] {
+  width: 80px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.setting-group input[type="text"] {
+  width: 100%;
+  text-align: left;
+}
+
+.panel-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.panel-buttons button {
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+#btn-save-config {
+  background: #27ae60;
+  color: #fff;
+}
+
+#btn-reset-config {
+  background: #e67e22;
+  color: #fff;
+}
+
+#btn-close-settings,
+#btn-close-live-q {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.live-answer-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.live-answer-row input[type="text"] {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+.live-answer-row label {
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+#btn-submit-live-q {
+  background: #3498db;
+  color: #fff;
+}
+
+/* ─── Animations ─── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 0.6s ease-in-out infinite;
+}
