@@ -71,38 +71,19 @@ export class BaseballFieldRenderer {
 
     ctx.clearRect(0, 0, this.width, this.height);
 
-    // Background gradient
-    const bgGrad = ctx.createRadialGradient(
-      center.x, center.y - bd, bd * 0.5,
-      center.x, center.y - bd, bd * 3,
-    );
-    bgGrad.addColorStop(0, '#2d7a3a');
-    bgGrad.addColorStop(1, '#1a472a');
+    // Vertical green gradient background
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, this.height);
+    bgGrad.addColorStop(0, '#047857');
+    bgGrad.addColorStop(1, '#064e3b');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, this.width, this.height);
 
-    // Outfield grass (fan shape)
-    const outfieldR = bd * 2.5;
-    ctx.fillStyle = '#2a8c3a';
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y);
-    ctx.arc(home.x, home.y, outfieldR, -Math.PI * 0.75, -Math.PI * 0.25, false);
-    ctx.closePath();
-    ctx.fill();
-
-    // Warning track
-    ctx.strokeStyle = '#8B6914';
-    ctx.lineWidth = Math.max(8, bd * 0.06);
-    ctx.beginPath();
-    ctx.arc(home.x, home.y, outfieldR - Math.max(10, bd * 0.07), -Math.PI * 0.75, -Math.PI * 0.25, false);
-    ctx.stroke();
-
-    // Outfield fence
-    ctx.strokeStyle = '#5a3a1a';
-    ctx.lineWidth = Math.max(4, bd * 0.03);
-    ctx.beginPath();
-    ctx.arc(home.x, home.y, outfieldR - 2, -Math.PI * 0.75, -Math.PI * 0.25, false);
-    ctx.stroke();
+    // Vertical mowing pinstripes
+    const bandW = Math.max(16, bd * 0.18);
+    ctx.fillStyle = 'rgba(255,255,255,0.10)';
+    for (let x = 0; x < this.width; x += bandW * 2) {
+      ctx.fillRect(x, 0, bandW, this.height);
+    }
 
     // Infield dirt area (expanded diamond)
     const dirtExpand = bd * 0.25;
