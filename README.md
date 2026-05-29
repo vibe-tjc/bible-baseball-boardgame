@@ -1,6 +1,6 @@
 # 聖經全壘打（Bible Home Run）⚾
 
-一款以**聖經知識問答**結合**棒球**規則的多人即時搶答遊戲。主畫面（Host）顯示棒球場與計分板，玩家用手機掃描 QR Code 加入分隊搶答；答對就揮出安打推進壘包、得分，答錯則由對隊搶分。適合教會團契、主日學、小組聚會等場合在大螢幕上帶動。
+一款以**聖經知識問答**結合**棒球**規則的多人即時搶答遊戲。主畫面（Host）顯示棒球場與計分板，玩家用手機掃描 QR Code 加入分隊搶答；答對就揮出安打推進壘包、得分，答錯則由對隊搶分。
 
 支援**繁體中文 / English** 雙語即時切換。
 
@@ -165,17 +165,3 @@ npm run dev
 ├── tsdown.config.ts
 └── package.json
 ```
-
----
-
-## 部署說明
-
-本遊戲需要**長時間運行的 Node.js 伺服器**與 WebSocket 連線，因此**無法部署在 GitHub Pages**（Pages 只能提供靜態檔案，沒有 Node 執行環境）。
-
-請部署到支援常駐程序與 WebSocket 的平台，例如 Render、Railway、Fly.io 或自架 VPS。基本流程為：在伺服器上 `npm install && npm run build`，再以 `npm start`（建議搭配 pm2 / systemd 等程序管理工具）執行，並將 `PORT` 設定為平台指定的埠號。
-
----
-
-## 授權
-
-本專案目前未指定授權條款（All rights reserved）；如需開放授權，請補上對應的 LICENSE 檔案。
