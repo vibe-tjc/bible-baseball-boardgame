@@ -117,6 +117,58 @@ export class BaseballFieldRenderer {
 
     // Home plate (pentagon, point down)
     this.drawHomePlate(home.x, home.y, baseSize * 0.6);
+
+    // Base labels
+    const labelFont = `bold ${Math.max(9, Math.round(bd * 0.14))}px Arial`;
+    const labelOpts = { font: labelFont, bg: 'rgba(255,255,255,0.85)', fg: '#334155', padX: Math.max(5, bd * 0.05), padY: Math.max(2, bd * 0.02) };
+    const labelGap = baseSize * 0.85;
+    this.drawPill(home.x, home.y + labelGap, 'HOME', labelOpts);
+    this.drawPill(second.x, second.y - labelGap, '2B', labelOpts);
+    this.drawPill(first.x + labelGap, first.y, '1B', labelOpts);
+    this.drawPill(third.x - labelGap, third.y, '3B', labelOpts);
+
+    // "BASEBALL BOARD" pill near the top of the field
+    const boardFont = `bold ${Math.max(9, Math.round(bd * 0.13))}px Arial`;
+    const boardY = Math.max(bd * 0.4, center.y - tanRadius - bd * 0.35);
+    this.drawPill(center.x, boardY, 'BASEBALL BOARD', {
+      font: boardFont, bg: 'rgba(6,78,59,0.7)', fg: '#d1fae5',
+      padX: Math.max(10, bd * 0.12), padY: Math.max(4, bd * 0.04), letterSpacing: Math.max(2, bd * 0.03),
+    });
+  }
+
+  /** Draw a rounded pill with centered text. */
+  private drawPill(
+    cx: number, cy: number, text: string,
+    opts: { font: string; bg: string; fg: string; padX: number; padY: number; letterSpacing?: number },
+  ): void {
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.font = opts.font;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const spacing = opts.letterSpacing ?? 0;
+    const baseW = ctx.measureText(text).width;
+    const textW = baseW + spacing * Math.max(0, text.length - 1);
+    const w = textW + opts.padX * 2;
+    const fontPx = parseInt((opts.font.match(/(\d+)px/) || [])[1] || '12', 10);
+    const h = fontPx + opts.padY * 2;
+    ctx.fillStyle = opts.bg;
+    this.roundedRectPath(cx - w / 2, cy - h / 2, w, h, h / 2);
+    ctx.fill();
+    ctx.fillStyle = opts.fg;
+    if (spacing > 0) {
+      // manual letter spacing
+      let x = cx - textW / 2;
+      ctx.textAlign = 'left';
+      for (const ch of text) {
+        const cw = ctx.measureText(ch).width;
+        ctx.fillText(ch, x, cy);
+        x += cw + spacing;
+      }
+    } else {
+      ctx.fillText(text, cx, cy);
+    }
+    ctx.restore();
   }
 
   /** Trace a rounded-corner diamond path centered at (cx,cy) with axis radius `radius`. */
