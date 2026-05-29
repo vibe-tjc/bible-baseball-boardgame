@@ -67,177 +67,186 @@ export class BaseballFieldRenderer {
   /** Draw the static baseball field background */
   drawField(): void {
     const ctx = this.ctx;
-    const { home, first, second, third, pitcher, center, baseDistance: bd } = this.positions;
+    const { home, first, second, third, center, baseDistance: bd } = this.positions;
 
     ctx.clearRect(0, 0, this.width, this.height);
 
-    // Background gradient
-    const bgGrad = ctx.createRadialGradient(
-      center.x, center.y - bd, bd * 0.5,
-      center.x, center.y - bd, bd * 3,
-    );
-    bgGrad.addColorStop(0, '#2d7a3a');
-    bgGrad.addColorStop(1, '#1a472a');
+    // Vertical green gradient background
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, this.height);
+    bgGrad.addColorStop(0, '#047857');
+    bgGrad.addColorStop(1, '#064e3b');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, this.width, this.height);
 
-    // Outfield grass (fan shape)
-    const outfieldR = bd * 2.5;
-    ctx.fillStyle = '#2a8c3a';
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y);
-    ctx.arc(home.x, home.y, outfieldR, -Math.PI * 0.75, -Math.PI * 0.25, false);
-    ctx.closePath();
+    // Vertical mowing pinstripes
+    const bandW = Math.max(16, bd * 0.18);
+    ctx.fillStyle = 'rgba(255,255,255,0.10)';
+    for (let x = 0; x < this.width; x += bandW * 2) {
+      ctx.fillRect(x, 0, bandW, this.height);
+    }
+
+    // Large tan diamond (infield)
+    const tanRadius = bd * 1.18;
+    ctx.fillStyle = '#b45309';
+    this.roundedDiamondPath(center.x, center.y, tanRadius, bd * 0.18);
     ctx.fill();
 
-    // Warning track
-    ctx.strokeStyle = '#8B6914';
-    ctx.lineWidth = Math.max(8, bd * 0.06);
-    ctx.beginPath();
-    ctx.arc(home.x, home.y, outfieldR - Math.max(10, bd * 0.07), -Math.PI * 0.75, -Math.PI * 0.25, false);
+    // White basepath outline connecting the bases
+    ctx.strokeStyle = '#fff7ed';
+    ctx.lineWidth = Math.max(6, bd * 0.06);
+    ctx.lineJoin = 'round';
+    this.roundedDiamondPath(center.x, center.y, bd, bd * 0.12);
     ctx.stroke();
-
-    // Outfield fence
-    ctx.strokeStyle = '#5a3a1a';
-    ctx.lineWidth = Math.max(4, bd * 0.03);
-    ctx.beginPath();
-    ctx.arc(home.x, home.y, outfieldR - 2, -Math.PI * 0.75, -Math.PI * 0.25, false);
-    ctx.stroke();
-
-    // Infield dirt area (expanded diamond)
-    const dirtExpand = bd * 0.25;
-    ctx.fillStyle = '#c4956a';
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y + dirtExpand * 0.3);
-    ctx.lineTo(first.x + dirtExpand, first.y);
-    ctx.lineTo(second.x, second.y - dirtExpand);
-    ctx.lineTo(third.x - dirtExpand, third.y);
-    ctx.closePath();
-    ctx.fill();
-
-    // Infield grass (rounded diamond inside dirt)
-    const innerScale = 0.6;
-    const icx = center.x;
-    const icy = center.y;
-    ctx.fillStyle = '#35a045';
-    ctx.beginPath();
-    ctx.moveTo(icx, icy + bd * innerScale);
-    ctx.quadraticCurveTo(icx + bd * innerScale * 0.6, icy + bd * innerScale * 0.6, icx + bd * innerScale, icy);
-    ctx.quadraticCurveTo(icx + bd * innerScale * 0.6, icy - bd * innerScale * 0.6, icx, icy - bd * innerScale);
-    ctx.quadraticCurveTo(icx - bd * innerScale * 0.6, icy - bd * innerScale * 0.6, icx - bd * innerScale, icy);
-    ctx.quadraticCurveTo(icx - bd * innerScale * 0.6, icy + bd * innerScale * 0.6, icx, icy + bd * innerScale);
-    ctx.closePath();
-    ctx.fill();
-
-    // Base paths (dirt strips)
-    const pathWidth = Math.max(6, bd * 0.05);
-    ctx.strokeStyle = '#c4956a';
-    ctx.lineWidth = pathWidth;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y);
-    ctx.lineTo(first.x, first.y);
-    ctx.lineTo(second.x, second.y);
-    ctx.lineTo(third.x, third.y);
-    ctx.lineTo(home.x, home.y);
-    ctx.stroke();
-
-    // Base lines (white)
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = Math.max(2, bd * 0.015);
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y);
-    ctx.lineTo(first.x, first.y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y);
-    ctx.lineTo(third.x, third.y);
-    ctx.stroke();
-
-    // Foul lines extending to outfield
-    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-    ctx.lineWidth = Math.max(1, bd * 0.01);
-    ctx.setLineDash([bd * 0.03, bd * 0.03]);
-    const foulExtend = bd * 1.5;
-    const dx1 = first.x - home.x;
-    const dy1 = first.y - home.y;
-    const len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
-    ctx.beginPath();
-    ctx.moveTo(first.x, first.y);
-    ctx.lineTo(first.x + (dx1 / len1) * foulExtend, first.y + (dy1 / len1) * foulExtend);
-    ctx.stroke();
-    const dx3 = third.x - home.x;
-    const dy3 = third.y - home.y;
-    const len3 = Math.sqrt(dx3 * dx3 + dy3 * dy3);
-    ctx.beginPath();
-    ctx.moveTo(third.x, third.y);
-    ctx.lineTo(third.x + (dx3 / len3) * foulExtend, third.y + (dy3 / len3) * foulExtend);
-    ctx.stroke();
-    ctx.setLineDash([]);
 
     // Pitcher's mound
-    const moundR = Math.max(10, bd * 0.08);
-    ctx.fillStyle = '#c4956a';
+    const moundR = Math.max(14, bd * 0.42);
+    ctx.fillStyle = '#d97706';
     ctx.beginPath();
-    ctx.arc(pitcher.x, pitcher.y, moundR, 0, Math.PI * 2);
+    ctx.arc(center.x, center.y, moundR, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = '#fff';
-    const rubberW = Math.max(8, bd * 0.06);
-    ctx.fillRect(pitcher.x - rubberW / 2, pitcher.y - 1, rubberW, 2);
+    ctx.fillStyle = '#fff7ed';
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, moundR * 0.4, 0, Math.PI * 2);
+    ctx.fill();
 
-    // Home plate (pentagon)
-    this.drawHomePlate(home.x, home.y, Math.max(8, bd * 0.06));
-
-    // Bases (rotated squares)
-    const baseSize = Math.max(8, bd * 0.06);
+    // Bases (chunky rounded squares)
+    const baseSize = Math.max(14, bd * 0.3);
     this.drawBase(first.x, first.y, baseSize);
     this.drawBase(second.x, second.y, baseSize);
     this.drawBase(third.x, third.y, baseSize);
 
-    // Batter's boxes
-    this.drawBatterBox(home.x, home.y, bd);
+    // Home plate (pentagon, point down)
+    this.drawHomePlate(home.x, home.y, baseSize * 0.6);
+
+    // Base labels
+    const labelFont = `bold ${Math.max(9, Math.round(bd * 0.14))}px Arial`;
+    const labelOpts = { font: labelFont, bg: 'rgba(255,255,255,0.85)', fg: '#334155', padX: Math.max(5, bd * 0.05), padY: Math.max(2, bd * 0.02) };
+    const labelGap = baseSize * 0.85;
+    this.drawPill(home.x, home.y + labelGap, 'HOME', labelOpts);
+    this.drawPill(second.x, second.y - labelGap, '2B', labelOpts);
+    this.drawPill(first.x + labelGap, first.y, '1B', labelOpts);
+    this.drawPill(third.x - labelGap, third.y, '3B', labelOpts);
+
+    // "BASEBALL BOARD" pill near the top of the field
+    const boardFont = `bold ${Math.max(9, Math.round(bd * 0.13))}px Arial`;
+    const boardY = Math.max(bd * 0.4, center.y - tanRadius - bd * 0.35);
+    this.drawPill(center.x, boardY, 'BASEBALL BOARD', {
+      font: boardFont, bg: 'rgba(6,78,59,0.7)', fg: '#d1fae5',
+      padX: Math.max(10, bd * 0.12), padY: Math.max(4, bd * 0.04), letterSpacing: Math.max(2, bd * 0.03),
+    });
+  }
+
+  /** Draw a rounded pill with centered text. */
+  private drawPill(
+    cx: number, cy: number, text: string,
+    opts: { font: string; bg: string; fg: string; padX: number; padY: number; letterSpacing?: number },
+  ): void {
+    const ctx = this.ctx;
+    ctx.save();
+    ctx.font = opts.font;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const spacing = opts.letterSpacing ?? 0;
+    const baseW = ctx.measureText(text).width;
+    const textW = baseW + spacing * Math.max(0, text.length - 1);
+    const w = textW + opts.padX * 2;
+    const fontPx = parseInt((opts.font.match(/(\d+)px/) || [])[1] || '12', 10);
+    const h = fontPx + opts.padY * 2;
+    ctx.fillStyle = opts.bg;
+    this.roundedRectPath(cx - w / 2, cy - h / 2, w, h, h / 2);
+    ctx.fill();
+    ctx.fillStyle = opts.fg;
+    if (spacing > 0) {
+      // manual letter spacing
+      let x = cx - textW / 2;
+      ctx.textAlign = 'left';
+      for (const ch of text) {
+        const cw = ctx.measureText(ch).width;
+        ctx.fillText(ch, x, cy);
+        x += cw + spacing;
+      }
+    } else {
+      ctx.fillText(text, cx, cy);
+    }
+    ctx.restore();
+  }
+
+  /** Trace a rounded-corner diamond path centered at (cx,cy) with axis radius `radius`. */
+  private roundedDiamondPath(cx: number, cy: number, radius: number, r: number): void {
+    const ctx = this.ctx;
+    // Diamond points: top, right, bottom, left
+    const pts = [
+      { x: cx, y: cy - radius },
+      { x: cx + radius, y: cy },
+      { x: cx, y: cy + radius },
+      { x: cx - radius, y: cy },
+    ];
+    ctx.beginPath();
+    for (let i = 0; i < 4; i++) {
+      const prev = pts[(i + 3) % 4];
+      const curr = pts[i];
+      const next = pts[(i + 1) % 4];
+      // approach point along edge from prev->curr
+      const a = this.pointTowards(curr, prev, r);
+      // depart point along edge curr->next
+      const b = this.pointTowards(curr, next, r);
+      if (i === 0) ctx.moveTo(a.x, a.y);
+      else ctx.lineTo(a.x, a.y);
+      ctx.quadraticCurveTo(curr.x, curr.y, b.x, b.y);
+    }
+    ctx.closePath();
+  }
+
+  /** Point `dist` away from `from` toward `to`. */
+  private pointTowards(from: { x: number; y: number }, to: { x: number; y: number }, dist: number): { x: number; y: number } {
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const len = Math.hypot(dx, dy) || 1;
+    return { x: from.x + (dx / len) * dist, y: from.y + (dy / len) * dist };
   }
 
   private drawHomePlate(x: number, y: number, size: number): void {
     const ctx = this.ctx;
-    ctx.fillStyle = '#fff';
+    const w = size; // half-width
+    ctx.fillStyle = '#fff7ed';
+    ctx.strokeStyle = '#92400e';
+    ctx.lineWidth = Math.max(2, size * 0.08);
     ctx.beginPath();
-    ctx.moveTo(x, y + size);
-    ctx.lineTo(x + size * 0.8, y + size * 0.3);
-    ctx.lineTo(x + size * 0.8, y - size * 0.5);
-    ctx.lineTo(x - size * 0.8, y - size * 0.5);
-    ctx.lineTo(x - size * 0.8, y + size * 0.3);
+    ctx.moveTo(x - w, y - size);       // top-left
+    ctx.lineTo(x + w, y - size);       // top-right
+    ctx.lineTo(x + w, y);              // mid-right
+    ctx.lineTo(x, y + size);           // bottom point
+    ctx.lineTo(x - w, y);              // mid-left
     ctx.closePath();
     ctx.fill();
-    ctx.strokeStyle = '#333';
-    ctx.lineWidth = 1;
     ctx.stroke();
   }
 
   private drawBase(x: number, y: number, size: number): void {
     const ctx = this.ctx;
+    const r = size * 0.22;
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(Math.PI / 4);
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(-size / 2, -size / 2, size, size);
-    ctx.strokeStyle = '#999';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(-size / 2, -size / 2, size, size);
+    ctx.fillStyle = '#fff7ed';
+    ctx.strokeStyle = '#92400e';
+    ctx.lineWidth = Math.max(2, size * 0.08);
+    this.roundedRectPath(-size / 2, -size / 2, size, size, r);
+    ctx.fill();
+    ctx.stroke();
     ctx.restore();
   }
 
-  private drawBatterBox(hx: number, hy: number, bd: number): void {
+  /** Trace a rounded rectangle path. */
+  private roundedRectPath(x: number, y: number, w: number, h: number, r: number): void {
     const ctx = this.ctx;
-    const boxW = Math.max(12, bd * 0.09);
-    const boxH = Math.max(20, bd * 0.15);
-    const offset = Math.max(10, bd * 0.08);
-
-    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-    ctx.lineWidth = Math.max(1, bd * 0.01);
-    ctx.strokeRect(hx - offset - boxW, hy - boxH / 2, boxW, boxH);
-    ctx.strokeRect(hx + offset, hy - boxH / 2, boxW, boxH);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
   }
 
   /** Draw runners for a single team with an offset to avoid overlap */
