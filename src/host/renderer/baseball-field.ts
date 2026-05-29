@@ -85,77 +85,18 @@ export class BaseballFieldRenderer {
       ctx.fillRect(x, 0, bandW, this.height);
     }
 
-    // Infield dirt area (expanded diamond)
-    const dirtExpand = bd * 0.25;
-    ctx.fillStyle = '#c4956a';
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y + dirtExpand * 0.3);
-    ctx.lineTo(first.x + dirtExpand, first.y);
-    ctx.lineTo(second.x, second.y - dirtExpand);
-    ctx.lineTo(third.x - dirtExpand, third.y);
-    ctx.closePath();
+    // Large tan diamond (infield)
+    const tanRadius = bd * 1.18;
+    ctx.fillStyle = '#b45309';
+    this.roundedDiamondPath(center.x, center.y, tanRadius, bd * 0.18);
     ctx.fill();
 
-    // Infield grass (rounded diamond inside dirt)
-    const innerScale = 0.6;
-    const icx = center.x;
-    const icy = center.y;
-    ctx.fillStyle = '#35a045';
-    ctx.beginPath();
-    ctx.moveTo(icx, icy + bd * innerScale);
-    ctx.quadraticCurveTo(icx + bd * innerScale * 0.6, icy + bd * innerScale * 0.6, icx + bd * innerScale, icy);
-    ctx.quadraticCurveTo(icx + bd * innerScale * 0.6, icy - bd * innerScale * 0.6, icx, icy - bd * innerScale);
-    ctx.quadraticCurveTo(icx - bd * innerScale * 0.6, icy - bd * innerScale * 0.6, icx - bd * innerScale, icy);
-    ctx.quadraticCurveTo(icx - bd * innerScale * 0.6, icy + bd * innerScale * 0.6, icx, icy + bd * innerScale);
-    ctx.closePath();
-    ctx.fill();
-
-    // Base paths (dirt strips)
-    const pathWidth = Math.max(6, bd * 0.05);
-    ctx.strokeStyle = '#c4956a';
-    ctx.lineWidth = pathWidth;
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y);
-    ctx.lineTo(first.x, first.y);
-    ctx.lineTo(second.x, second.y);
-    ctx.lineTo(third.x, third.y);
-    ctx.lineTo(home.x, home.y);
+    // White basepath outline connecting the bases
+    ctx.strokeStyle = '#fff7ed';
+    ctx.lineWidth = Math.max(6, bd * 0.06);
+    ctx.lineJoin = 'round';
+    this.roundedDiamondPath(center.x, center.y, bd, bd * 0.12);
     ctx.stroke();
-
-    // Base lines (white)
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = Math.max(2, bd * 0.015);
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y);
-    ctx.lineTo(first.x, first.y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(home.x, home.y);
-    ctx.lineTo(third.x, third.y);
-    ctx.stroke();
-
-    // Foul lines extending to outfield
-    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-    ctx.lineWidth = Math.max(1, bd * 0.01);
-    ctx.setLineDash([bd * 0.03, bd * 0.03]);
-    const foulExtend = bd * 1.5;
-    const dx1 = first.x - home.x;
-    const dy1 = first.y - home.y;
-    const len1 = Math.sqrt(dx1 * dx1 + dy1 * dy1);
-    ctx.beginPath();
-    ctx.moveTo(first.x, first.y);
-    ctx.lineTo(first.x + (dx1 / len1) * foulExtend, first.y + (dy1 / len1) * foulExtend);
-    ctx.stroke();
-    const dx3 = third.x - home.x;
-    const dy3 = third.y - home.y;
-    const len3 = Math.sqrt(dx3 * dx3 + dy3 * dy3);
-    ctx.beginPath();
-    ctx.moveTo(third.x, third.y);
-    ctx.lineTo(third.x + (dx3 / len3) * foulExtend, third.y + (dy3 / len3) * foulExtend);
-    ctx.stroke();
-    ctx.setLineDash([]);
 
     // Pitcher's mound
     const moundR = Math.max(10, bd * 0.08);
