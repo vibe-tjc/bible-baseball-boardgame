@@ -99,14 +99,15 @@ export class BaseballFieldRenderer {
     ctx.stroke();
 
     // Pitcher's mound
-    const moundR = Math.max(10, bd * 0.08);
-    ctx.fillStyle = '#c4956a';
+    const moundR = Math.max(14, bd * 0.42);
+    ctx.fillStyle = '#d97706';
     ctx.beginPath();
-    ctx.arc(pitcher.x, pitcher.y, moundR, 0, Math.PI * 2);
+    ctx.arc(center.x, center.y, moundR, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = '#fff';
-    const rubberW = Math.max(8, bd * 0.06);
-    ctx.fillRect(pitcher.x - rubberW / 2, pitcher.y - 1, rubberW, 2);
+    ctx.fillStyle = '#fff7ed';
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, moundR * 0.4, 0, Math.PI * 2);
+    ctx.fill();
 
     // Home plate (pentagon)
     this.drawHomePlate(home.x, home.y, Math.max(8, bd * 0.06));
