@@ -180,6 +180,40 @@ export class BaseballFieldRenderer {
     this.drawBatterBox(home.x, home.y, bd);
   }
 
+  /** Trace a rounded-corner diamond path centered at (cx,cy) with axis radius `radius`. */
+  private roundedDiamondPath(cx: number, cy: number, radius: number, r: number): void {
+    const ctx = this.ctx;
+    // Diamond points: top, right, bottom, left
+    const pts = [
+      { x: cx, y: cy - radius },
+      { x: cx + radius, y: cy },
+      { x: cx, y: cy + radius },
+      { x: cx - radius, y: cy },
+    ];
+    ctx.beginPath();
+    for (let i = 0; i < 4; i++) {
+      const prev = pts[(i + 3) % 4];
+      const curr = pts[i];
+      const next = pts[(i + 1) % 4];
+      // approach point along edge from prev->curr
+      const a = this.pointTowards(curr, prev, r);
+      // depart point along edge curr->next
+      const b = this.pointTowards(curr, next, r);
+      if (i === 0) ctx.moveTo(a.x, a.y);
+      else ctx.lineTo(a.x, a.y);
+      ctx.quadraticCurveTo(curr.x, curr.y, b.x, b.y);
+    }
+    ctx.closePath();
+  }
+
+  /** Point `dist` away from `from` toward `to`. */
+  private pointTowards(from: { x: number; y: number }, to: { x: number; y: number }, dist: number): { x: number; y: number } {
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const len = Math.hypot(dx, dy) || 1;
+    return { x: from.x + (dx / len) * dist, y: from.y + (dy / len) * dist };
+  }
+
   private drawHomePlate(x: number, y: number, size: number): void {
     const ctx = this.ctx;
     ctx.fillStyle = '#fff';
