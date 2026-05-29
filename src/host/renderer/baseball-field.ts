@@ -67,7 +67,7 @@ export class BaseballFieldRenderer {
   /** Draw the static baseball field background */
   drawField(): void {
     const ctx = this.ctx;
-    const { home, first, second, third, pitcher, center, baseDistance: bd } = this.positions;
+    const { home, first, second, third, center, baseDistance: bd } = this.positions;
 
     ctx.clearRect(0, 0, this.width, this.height);
 
