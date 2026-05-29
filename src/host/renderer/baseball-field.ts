@@ -109,17 +109,14 @@ export class BaseballFieldRenderer {
     ctx.arc(center.x, center.y, moundR * 0.4, 0, Math.PI * 2);
     ctx.fill();
 
-    // Home plate (pentagon)
-    this.drawHomePlate(home.x, home.y, Math.max(8, bd * 0.06));
-
-    // Bases (rotated squares)
-    const baseSize = Math.max(8, bd * 0.06);
+    // Bases (chunky rounded squares)
+    const baseSize = Math.max(14, bd * 0.3);
     this.drawBase(first.x, first.y, baseSize);
     this.drawBase(second.x, second.y, baseSize);
     this.drawBase(third.x, third.y, baseSize);
 
-    // Batter's boxes
-    this.drawBatterBox(home.x, home.y, bd);
+    // Home plate (pentagon, point down)
+    this.drawHomePlate(home.x, home.y, baseSize * 0.6);
   }
 
   /** Trace a rounded-corner diamond path centered at (cx,cy) with axis radius `radius`. */
@@ -158,43 +155,46 @@ export class BaseballFieldRenderer {
 
   private drawHomePlate(x: number, y: number, size: number): void {
     const ctx = this.ctx;
-    ctx.fillStyle = '#fff';
+    const w = size; // half-width
+    ctx.fillStyle = '#fff7ed';
+    ctx.strokeStyle = '#92400e';
+    ctx.lineWidth = Math.max(2, size * 0.08);
     ctx.beginPath();
-    ctx.moveTo(x, y + size);
-    ctx.lineTo(x + size * 0.8, y + size * 0.3);
-    ctx.lineTo(x + size * 0.8, y - size * 0.5);
-    ctx.lineTo(x - size * 0.8, y - size * 0.5);
-    ctx.lineTo(x - size * 0.8, y + size * 0.3);
+    ctx.moveTo(x - w, y - size);       // top-left
+    ctx.lineTo(x + w, y - size);       // top-right
+    ctx.lineTo(x + w, y);              // mid-right
+    ctx.lineTo(x, y + size);           // bottom point
+    ctx.lineTo(x - w, y);              // mid-left
     ctx.closePath();
     ctx.fill();
-    ctx.strokeStyle = '#333';
-    ctx.lineWidth = 1;
     ctx.stroke();
   }
 
   private drawBase(x: number, y: number, size: number): void {
     const ctx = this.ctx;
+    const r = size * 0.22;
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(Math.PI / 4);
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(-size / 2, -size / 2, size, size);
-    ctx.strokeStyle = '#999';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(-size / 2, -size / 2, size, size);
+    ctx.fillStyle = '#fff7ed';
+    ctx.strokeStyle = '#92400e';
+    ctx.lineWidth = Math.max(2, size * 0.08);
+    this.roundedRectPath(-size / 2, -size / 2, size, size, r);
+    ctx.fill();
+    ctx.stroke();
     ctx.restore();
   }
 
-  private drawBatterBox(hx: number, hy: number, bd: number): void {
+  /** Trace a rounded rectangle path. */
+  private roundedRectPath(x: number, y: number, w: number, h: number, r: number): void {
     const ctx = this.ctx;
-    const boxW = Math.max(12, bd * 0.09);
-    const boxH = Math.max(20, bd * 0.15);
-    const offset = Math.max(10, bd * 0.08);
-
-    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-    ctx.lineWidth = Math.max(1, bd * 0.01);
-    ctx.strokeRect(hx - offset - boxW, hy - boxH / 2, boxW, boxH);
-    ctx.strokeRect(hx + offset, hy - boxH / 2, boxW, boxH);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
   }
 
   /** Draw runners for a single team with an offset to avoid overlap */
