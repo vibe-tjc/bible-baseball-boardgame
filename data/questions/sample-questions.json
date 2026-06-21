@@ -219,6 +219,281 @@
         { "id": 4, "text": { "zh": "27", "en": "27" }, "correct": false }
       ],
       "category": "General"
+    },
+    {
+      "id": "q21",
+      "text": { "zh": "神最先創造的人是誰？", "en": "Who was the first man God created?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "亞當", "en": "Adam" }, "correct": true },
+        { "id": 2, "text": { "zh": "挪亞", "en": "Noah" }, "correct": false },
+        { "id": 3, "text": { "zh": "該隱", "en": "Cain" }, "correct": false },
+        { "id": 4, "text": { "zh": "塞特", "en": "Seth" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q22",
+      "text": { "zh": "神在創造的第一天造了什麼？", "en": "What did God create on the first day?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "光", "en": "Light" }, "correct": true },
+        { "id": 2, "text": { "zh": "動物", "en": "Animals" }, "correct": false },
+        { "id": 3, "text": { "zh": "海洋", "en": "The seas" }, "correct": false },
+        { "id": 4, "text": { "zh": "人類", "en": "Humans" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q23",
+      "text": { "zh": "亞當和夏娃的長子是誰？", "en": "Who was Adam and Eve's firstborn son?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "該隱", "en": "Cain" }, "correct": true },
+        { "id": 2, "text": { "zh": "亞伯", "en": "Abel" }, "correct": false },
+        { "id": 3, "text": { "zh": "塞特", "en": "Seth" }, "correct": false },
+        { "id": 4, "text": { "zh": "以諾", "en": "Enoch" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q24",
+      "text": { "zh": "洪水時下了幾晝夜的雨？", "en": "How many days and nights did it rain during the flood?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "四十", "en": "40" }, "correct": true },
+        { "id": 2, "text": { "zh": "七", "en": "7" }, "correct": false },
+        { "id": 3, "text": { "zh": "一百", "en": "100" }, "correct": false },
+        { "id": 4, "text": { "zh": "一百五十", "en": "150" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q25",
+      "text": { "zh": "洪水之後神以什麼為立約的記號？", "en": "What sign did God give as a covenant after the flood?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "彩虹", "en": "A rainbow" }, "correct": true },
+        { "id": 2, "text": { "zh": "星星", "en": "A star" }, "correct": false },
+        { "id": 3, "text": { "zh": "雲彩", "en": "A cloud" }, "correct": false },
+        { "id": 4, "text": { "zh": "火", "en": "Fire" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q26",
+      "text": { "zh": "誰被自己的哥哥們賣為奴隸？", "en": "Who was sold into slavery by his brothers?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "約瑟", "en": "Joseph" }, "correct": true },
+        { "id": 2, "text": { "zh": "便雅憫", "en": "Benjamin" }, "correct": false },
+        { "id": 3, "text": { "zh": "猶大", "en": "Judah" }, "correct": false },
+        { "id": 4, "text": { "zh": "流便", "en": "Reuben" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q27",
+      "text": { "zh": "以色列的第一位君王是誰？", "en": "Who was the first king of Israel?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "掃羅", "en": "Saul" }, "correct": true },
+        { "id": 2, "text": { "zh": "大衛", "en": "David" }, "correct": false },
+        { "id": 3, "text": { "zh": "所羅門", "en": "Solomon" }, "correct": false },
+        { "id": 4, "text": { "zh": "撒母耳", "en": "Samuel" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q28",
+      "text": { "zh": "摩西之後帶領以色列人進入應許之地的是誰？", "en": "Who succeeded Moses to lead Israel into the Promised Land?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "約書亞", "en": "Joshua" }, "correct": true },
+        { "id": 2, "text": { "zh": "亞倫", "en": "Aaron" }, "correct": false },
+        { "id": 3, "text": { "zh": "迦勒", "en": "Caleb" }, "correct": false },
+        { "id": 4, "text": { "zh": "基甸", "en": "Gideon" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q29",
+      "text": { "zh": "神在曠野賜給以色列人什麼食物？", "en": "What food did God provide the Israelites in the wilderness?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "嗎哪", "en": "Manna" }, "correct": true },
+        { "id": 2, "text": { "zh": "葡萄", "en": "Grapes" }, "correct": false },
+        { "id": 3, "text": { "zh": "魚", "en": "Fish" }, "correct": false },
+        { "id": 4, "text": { "zh": "蜂蜜", "en": "Honey" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q30",
+      "text": { "zh": "神降了多少個災給埃及？", "en": "How many plagues did God send upon Egypt?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "十", "en": "10" }, "correct": true },
+        { "id": 2, "text": { "zh": "七", "en": "7" }, "correct": false },
+        { "id": 3, "text": { "zh": "十二", "en": "12" }, "correct": false },
+        { "id": 4, "text": { "zh": "三", "en": "3" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q31",
+      "text": { "zh": "誰為法老解夢？", "en": "Who interpreted Pharaoh's dreams?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "約瑟", "en": "Joseph" }, "correct": true },
+        { "id": 2, "text": { "zh": "摩西", "en": "Moses" }, "correct": false },
+        { "id": 3, "text": { "zh": "亞倫", "en": "Aaron" }, "correct": false },
+        { "id": 4, "text": { "zh": "但以理", "en": "Daniel" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q32",
+      "text": { "zh": "神要亞伯拉罕獻上哪個兒子為祭？", "en": "Which son did God ask Abraham to sacrifice?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "以撒", "en": "Isaac" }, "correct": true },
+        { "id": 2, "text": { "zh": "以實瑪利", "en": "Ishmael" }, "correct": false },
+        { "id": 3, "text": { "zh": "雅各", "en": "Jacob" }, "correct": false },
+        { "id": 4, "text": { "zh": "以掃", "en": "Esau" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q33",
+      "text": { "zh": "哪位先知乘旋風被接升天？", "en": "Which prophet was taken up to heaven in a whirlwind?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "以利亞", "en": "Elijah" }, "correct": true },
+        { "id": 2, "text": { "zh": "以利沙", "en": "Elisha" }, "correct": false },
+        { "id": 3, "text": { "zh": "以賽亞", "en": "Isaiah" }, "correct": false },
+        { "id": 4, "text": { "zh": "以諾", "en": "Enoch" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q34",
+      "text": { "zh": "聖經的第一卷書是哪一卷？", "en": "What is the first book of the Bible?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "創世記", "en": "Genesis" }, "correct": true },
+        { "id": 2, "text": { "zh": "出埃及記", "en": "Exodus" }, "correct": false },
+        { "id": 3, "text": { "zh": "詩篇", "en": "Psalms" }, "correct": false },
+        { "id": 4, "text": { "zh": "馬太福音", "en": "Matthew" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q35",
+      "text": { "zh": "哪位人物以在苦難中忍耐著稱？", "en": "Who is known for his patience in suffering?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "約伯", "en": "Job" }, "correct": true },
+        { "id": 2, "text": { "zh": "大衛", "en": "David" }, "correct": false },
+        { "id": 3, "text": { "zh": "耶利米", "en": "Jeremiah" }, "correct": false },
+        { "id": 4, "text": { "zh": "但以理", "en": "Daniel" }, "correct": false }
+      ],
+      "category": "Old Testament"
+    },
+    {
+      "id": "q36",
+      "text": { "zh": "耶穌的母親叫什麼名字？", "en": "What was the name of Jesus' mother?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "馬利亞", "en": "Mary" }, "correct": true },
+        { "id": 2, "text": { "zh": "馬大", "en": "Martha" }, "correct": false },
+        { "id": 3, "text": { "zh": "以利沙伯", "en": "Elizabeth" }, "correct": false },
+        { "id": 4, "text": { "zh": "抹大拉的馬利亞", "en": "Mary Magdalene" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q37",
+      "text": { "zh": "是誰為耶穌施洗？", "en": "Who baptized Jesus?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "施洗約翰", "en": "John the Baptist" }, "correct": true },
+        { "id": 2, "text": { "zh": "彼得", "en": "Peter" }, "correct": false },
+        { "id": 3, "text": { "zh": "保羅", "en": "Paul" }, "correct": false },
+        { "id": 4, "text": { "zh": "安得烈", "en": "Andrew" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q38",
+      "text": { "zh": "耶穌用幾個餅餵飽五千人？", "en": "How many loaves did Jesus use to feed the five thousand?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "五", "en": "5" }, "correct": true },
+        { "id": 2, "text": { "zh": "二", "en": "2" }, "correct": false },
+        { "id": 3, "text": { "zh": "七", "en": "7" }, "correct": false },
+        { "id": 4, "text": { "zh": "十二", "en": "12" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q39",
+      "text": { "zh": "耶穌在第幾天從死裡復活？", "en": "On which day did Jesus rise from the dead?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "第三天", "en": "The third day" }, "correct": true },
+        { "id": 2, "text": { "zh": "第七天", "en": "The seventh day" }, "correct": false },
+        { "id": 3, "text": { "zh": "第一天", "en": "The first day" }, "correct": false },
+        { "id": 4, "text": { "zh": "第四十天", "en": "The fortieth day" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q40",
+      "text": { "zh": "哪位門徒三次不認耶穌？", "en": "Which disciple denied Jesus three times?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "彼得", "en": "Peter" }, "correct": true },
+        { "id": 2, "text": { "zh": "猶大", "en": "Judas" }, "correct": false },
+        { "id": 3, "text": { "zh": "約翰", "en": "John" }, "correct": false },
+        { "id": 4, "text": { "zh": "多馬", "en": "Thomas" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q41",
+      "text": { "zh": "新約大部分的書信是誰寫的？", "en": "Who wrote most of the New Testament epistles?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "保羅", "en": "Paul" }, "correct": true },
+        { "id": 2, "text": { "zh": "彼得", "en": "Peter" }, "correct": false },
+        { "id": 3, "text": { "zh": "約翰", "en": "John" }, "correct": false },
+        { "id": 4, "text": { "zh": "雅各", "en": "James" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q42",
+      "text": { "zh": "哪位門徒在親眼見到之前懷疑耶穌復活？", "en": "Which disciple doubted Jesus' resurrection until he saw him?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "多馬", "en": "Thomas" }, "correct": true },
+        { "id": 2, "text": { "zh": "彼得", "en": "Peter" }, "correct": false },
+        { "id": 3, "text": { "zh": "腓力", "en": "Philip" }, "correct": false },
+        { "id": 4, "text": { "zh": "雅各", "en": "James" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q43",
+      "text": { "zh": "耶穌被捕前在哪個園子禱告？", "en": "In which garden did Jesus pray before his arrest?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "客西馬尼園", "en": "Gethsemane" }, "correct": true },
+        { "id": 2, "text": { "zh": "伊甸園", "en": "Eden" }, "correct": false },
+        { "id": 3, "text": { "zh": "橄欖山", "en": "Mount of Olives" }, "correct": false },
+        { "id": 4, "text": { "zh": "各各他", "en": "Golgotha" }, "correct": false }
+      ],
+      "category": "New Testament"
+    },
+    {
+      "id": "q44",
+      "text": { "zh": "新約聖經共有幾卷書？", "en": "How many books are in the New Testament?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "27", "en": "27" }, "correct": true },
+        { "id": 2, "text": { "zh": "39", "en": "39" }, "correct": false },
+        { "id": 3, "text": { "zh": "66", "en": "66" }, "correct": false },
+        { "id": 4, "text": { "zh": "12", "en": "12" }, "correct": false }
+      ],
+      "category": "General"
+    },
+    {
+      "id": "q45",
+      "text": { "zh": "舊約聖經大部分是用什麼語言寫成的？", "en": "In which language was most of the Old Testament written?" },
+      "answers": [
+        { "id": 1, "text": { "zh": "希伯來文", "en": "Hebrew" }, "correct": true },
+        { "id": 2, "text": { "zh": "希臘文", "en": "Greek" }, "correct": false },
+        { "id": 3, "text": { "zh": "拉丁文", "en": "Latin" }, "correct": false },
+        { "id": 4, "text": { "zh": "亞蘭文", "en": "Aramaic" }, "correct": false }
+      ],
+      "category": "General"
     }
   ]
 }
