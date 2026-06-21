@@ -7,6 +7,9 @@ import { WsHandler } from './ws-handler.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT || '3000', 10);
+// Public base URL for the player join link / QR code (e.g.
+// https://game.example.com). Set this when running behind a reverse proxy.
+const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL || undefined;
 
 // Resolve paths
 const publicDir = resolve(__dirname, '..', 'public');
@@ -20,7 +23,7 @@ const server = createServer(httpHandler);
 
 // Create game manager & WS handler
 const gameManager = new GameManager(sessionsDir, questionsDir);
-const wsHandler = new WsHandler(server, gameManager, PORT);
+const wsHandler = new WsHandler(server, gameManager, PORT, PUBLIC_BASE_URL);
 
 // Graceful shutdown
 function shutdown() {

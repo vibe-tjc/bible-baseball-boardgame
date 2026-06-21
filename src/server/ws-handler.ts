@@ -25,10 +25,15 @@ export class WsHandler {
   private gameManager: GameManager;
   private clients: Map<WebSocket, ClientConnection> = new Map();
   private port: number;
+  private baseUrl: string | null;
 
-  constructor(server: HttpServer, gameManager: GameManager, port: number) {
+  constructor(server: HttpServer, gameManager: GameManager, port: number, baseUrl?: string) {
     this.gameManager = gameManager;
     this.port = port;
+    // Public base URL (e.g. https://game.example.com) used to build the
+    // player join link / QR code. Required behind a reverse proxy, where the
+    // container's local IP and internal port are not reachable by phones.
+    this.baseUrl = baseUrl?.replace(/\/+$/, '') || null;
     this.wss = new WebSocketServer({ noServer: true });
 
     server.on('upgrade', (req, socket, head) => {
@@ -121,8 +126,7 @@ export class WsHandler {
     conn.role = 'host';
     conn.gameId = session.gameId;
 
-    const localIp = getLocalIp();
-    const joinUrl = `http://${localIp}:${this.port}/player.html?game=${session.gameId}`;
+    const joinUrl = this.buildJoinUrl(session.gameId);
 
     let qrDataUrl = '';
     try {
@@ -157,8 +161,7 @@ export class WsHandler {
     conn.role = 'host';
     conn.gameId = payload.gameId;
 
-    const localIp = getLocalIp();
-    const joinUrl = `http://${localIp}:${this.port}/player.html?game=${payload.gameId}`;
+    const joinUrl = this.buildJoinUrl(payload.gameId);
 
     let qrDataUrl = '';
     try {
@@ -437,7 +440,14 @@ export class WsHandler {
     };
   }
 
-  // ─── Broadcast Helpers ───
+  // ─── Helpers ───
+
+  /** Build the player join URL. Prefers the configured public base URL
+   *  (for reverse-proxy / domain deployments); falls back to the LAN IP. */
+  private buildJoinUrl(gameId: string): string {
+    const base = this.baseUrl || `http://${getLocalIp()}:${this.port}`;
+    return `${base}/player.html?game=${gameId}`;
+  }
 
   private send(ws: WebSocket, msg: WsMessage): void {
     if (ws.readyState === WebSocket.OPEN) {
