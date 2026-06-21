@@ -94,7 +94,7 @@ export class GameSession {
   }
 
   /** Add a player to the smallest team */
-  addPlayer(id: string, name: string): PlayerInfo | null {
+  addPlayer(id: string, name: string, isHost = false): PlayerInfo | null {
     if (this._state !== 'lobby') return null;
 
     // Find team with fewest players
@@ -104,6 +104,7 @@ export class GameSession {
     if (team.players.length >= this.config.playersPerTeam) return null;
 
     const player: PlayerInfo = { id, name, teamIndex: team.index };
+    if (isHost) player.isHost = true;
     team.players.push(player);
     return player;
   }

@@ -29,6 +29,7 @@ export interface PlayerInfo {
   id: string;
   name: string;
   teamIndex: number;
+  isHost?: boolean;
 }
 
 export interface TeamState {
@@ -66,6 +67,8 @@ export type HostSaveConfigMsg = WsMessage<'host:saveConfig', {}>;
 export type HostResetConfigMsg = WsMessage<'host:resetConfig', {}>;
 export type HostResumeGameMsg = WsMessage<'host:resumeGame', { gameId: string }>;
 export type HostRejoinMsg = WsMessage<'host:rejoin', { gameId: string }>;
+export type HostJoinAsPlayerMsg = WsMessage<'host:joinAsPlayer', { name: string }>;
+export type HostLeaveAsPlayerMsg = WsMessage<'host:leaveAsPlayer', {}>;
 
 export type HostMessage =
   | HostCreateMsg
@@ -78,7 +81,9 @@ export type HostMessage =
   | HostSaveConfigMsg
   | HostResetConfigMsg
   | HostResumeGameMsg
-  | HostRejoinMsg;
+  | HostRejoinMsg
+  | HostJoinAsPlayerMsg
+  | HostLeaveAsPlayerMsg;
 
 // ─── Player → Server Messages ───
 
@@ -151,6 +156,10 @@ export type ServerSavedGamesMsg = WsMessage<'server:savedGames', {
   games: Array<{ gameId: string; savedAt: string; teams: string[] }>;
 }>;
 
+export type ServerHostJoinedMsg = WsMessage<'server:hostJoined', {
+  player: PlayerInfo | null;
+}>;
+
 export type ServerMessage =
   | ServerGameCreatedMsg
   | ServerPlayerJoinedMsg
@@ -162,7 +171,8 @@ export type ServerMessage =
   | ServerGameOverMsg
   | ServerTimerTickMsg
   | ServerErrorMsg
-  | ServerSavedGamesMsg;
+  | ServerSavedGamesMsg
+  | ServerHostJoinedMsg;
 
 // ─── Server → Player Messages ───
 

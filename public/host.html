@@ -20,6 +20,13 @@
         <h3 id="waiting-text">等待玩家加入...</h3>
         <div id="teams-container"></div>
       </div>
+      <div id="host-play-row">
+        <label id="host-play-label">
+          <input type="checkbox" id="cfg-host-play" />
+          <span id="host-play-text">主持人也參與</span>
+        </label>
+        <input type="text" id="host-player-name" placeholder="主持人" />
+      </div>
       <div id="lobby-controls">
         <button id="btn-start" disabled>開始遊戲</button>
         <button id="btn-settings">設定</button>
@@ -48,6 +55,7 @@
         <div id="outcome-text"></div>
       </div>
       <div id="host-controls">
+        <button id="btn-host-buzz" class="hidden">搶答！</button>
         <button id="btn-next" class="hidden">下一題</button>
       </div>
     </div>

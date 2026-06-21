@@ -89,6 +89,12 @@ export class WsHandler {
       case 'host:rejoin':
         this.handleHostRejoin(ws, conn, msg.payload as { gameId: string });
         break;
+      case 'host:joinAsPlayer':
+        this.handleHostJoinAsPlayer(ws, conn, msg.payload as { name: string });
+        break;
+      case 'host:leaveAsPlayer':
+        this.handleHostLeaveAsPlayer(ws, conn);
+        break;
       case 'player:join':
         this.handlePlayerJoin(ws, conn, msg.payload as { name: string; gameId: string });
         break;
@@ -210,6 +216,62 @@ export class WsHandler {
     const game = this.gameManager.getGame(conn.gameId);
     if (!game) return;
     Object.assign(game.config, payload.config);
+  }
+
+  private handleHostJoinAsPlayer(
+    ws: WebSocket,
+    conn: ClientConnection,
+    payload: { name: string },
+  ): void {
+    if (!conn.gameId) return;
+    const game = this.gameManager.getGame(conn.gameId);
+    if (!game) return;
+
+    // Already participating: ignore
+    if (conn.playerId) {
+      this.send(ws, createMessage('server:hostJoined', { player: game.getPlayer(conn.playerId) ?? null }));
+      return;
+    }
+
+    const playerId = crypto.randomUUID();
+    const player = game.addPlayer(playerId, payload.name, true);
+    if (!player) {
+      // Game full or already started
+      this.send(ws, createMessage('server:hostJoined', { player: null }));
+      return;
+    }
+
+    // Host connection now doubles as a player; role stays 'host'.
+    conn.playerId = playerId;
+
+    this.send(ws, createMessage('server:hostJoined', { player }));
+
+    // Update team display on host
+    this.broadcastToHost(conn.gameId, createMessage('server:playerJoined', {
+      player,
+      teams: game.getTeams(),
+    }));
+  }
+
+  private handleHostLeaveAsPlayer(ws: WebSocket, conn: ClientConnection): void {
+    if (!conn.gameId || !conn.playerId) {
+      this.send(ws, createMessage('server:hostJoined', { player: null }));
+      return;
+    }
+    const game = this.gameManager.getGame(conn.gameId);
+    if (game) {
+      game.removePlayer(conn.playerId);
+    }
+    conn.playerId = null;
+
+    this.send(ws, createMessage('server:hostJoined', { player: null }));
+
+    if (game) {
+      this.broadcastToHost(conn.gameId, createMessage('server:playerJoined', {
+        player: { id: '', name: '', teamIndex: 0 },
+        teams: game.getTeams(),
+      }));
+    }
   }
 
   private handlePlayerJoin(

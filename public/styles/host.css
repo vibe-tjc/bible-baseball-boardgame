@@ -94,6 +94,51 @@ body {
   opacity: 0.9;
 }
 
+.team-column .player-name.is-host {
+  font-weight: 700;
+  opacity: 1;
+}
+
+.host-badge {
+  margin-right: 6px;
+}
+
+#host-play-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+#host-play-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+#host-play-label input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+#host-player-name {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.9);
+  color: #1a1a2e;
+}
+
+#host-player-name:disabled {
+  opacity: 0.5;
+}
+
 #lobby-controls {
   display: flex;
   gap: 12px;
@@ -244,6 +289,22 @@ button:disabled {
   text-align: center;
 }
 
+.answer-choice.answerable {
+  cursor: pointer;
+  background: rgba(52,152,219,0.35);
+  outline: 2px solid #3498db;
+}
+
+.answer-choice.answerable:hover {
+  background: rgba(52,152,219,0.6);
+  transform: translateY(-2px);
+}
+
+.answer-choice.selected {
+  background: #2980b9;
+  outline: 2px solid #fff;
+}
+
 .answer-choice.correct {
   background: #27ae60;
 }
@@ -314,6 +375,24 @@ button:disabled {
   background: #3498db;
   color: #fff;
   font-size: 1.2rem;
+}
+
+#btn-host-buzz {
+  background: #e74c3c;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-right: 12px;
+  animation: host-buzz-pulse 0.9s ease-in-out infinite;
+}
+
+#btn-host-buzz:disabled {
+  animation: none;
+}
+
+@keyframes host-buzz-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(231,76,60,0.6); }
+  50% { transform: scale(1.06); box-shadow: 0 0 0 14px rgba(231,76,60,0); }
 }
 
 /* ─── Game Over ─── */

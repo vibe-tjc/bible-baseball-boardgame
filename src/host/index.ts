@@ -14,6 +14,7 @@ import type {
   ServerTimerTickMsg,
   ServerErrorMsg,
   ServerSavedGamesMsg,
+  ServerHostJoinedMsg,
 } from '../shared/protocol.js';
 import { createMessage } from '../shared/protocol.js';
 import { BaseballFieldRenderer } from './renderer/baseball-field.js';
@@ -30,6 +31,12 @@ let currentTimerTotal = 0;
 let fieldRenderer: BaseballFieldRenderer | null = null;
 let animController: AnimationController | null = null;
 let liveQuestionCounter = 0;
+
+// Host-as-player state
+let hostPlayerId: string | null = null;
+let hostTeamIndex = -1;
+let isParticipant = false;
+let canAnswer = false;
 
 // ─── DOM ───
 
@@ -117,6 +124,9 @@ function handleMessage(msg: WsMessage): void {
     case 'server:savedGames':
       handleSavedGames(msg as ServerSavedGamesMsg);
       break;
+    case 'server:hostJoined':
+      handleHostJoined(msg as ServerHostJoinedMsg);
+      break;
     case 'server:error':
       console.error('[Host]', (msg as ServerErrorMsg).payload.message);
       break;
@@ -162,7 +172,23 @@ function handleQuestion(msg: ServerQuestionMsg): void {
     div.className = 'answer-choice';
     div.dataset.answerId = String(ans.id);
     div.textContent = ans.text[lang];
+    div.addEventListener('click', () => {
+      if (!canAnswer) return;
+      canAnswer = false;
+      container.querySelectorAll('.answer-choice').forEach(el => el.classList.remove('answerable'));
+      div.classList.add('selected');
+      send(createMessage('player:answer', { answerId: ans.id }));
+    });
     container.appendChild(div);
+  }
+
+  // Host-as-player: reset interaction, open buzzer for this question
+  canAnswer = false;
+  if (isParticipant) {
+    show('btn-host-buzz');
+    ($('btn-host-buzz') as HTMLButtonElement).disabled = false;
+  } else {
+    hide('btn-host-buzz');
   }
 
   // Reset timer
@@ -176,13 +202,23 @@ function handleQuestion(msg: ServerQuestionMsg): void {
 }
 
 function handleBuzzWinner(msg: ServerBuzzWinnerMsg): void {
-  const { playerName, teamIndex } = msg.payload;
+  const { playerId, playerName, teamIndex } = msg.payload;
   $('question-text').textContent =
     `${playerName} (${i('team')} ${String.fromCharCode(65 + teamIndex)}) ${i('buzzerReady')}`;
+
+  // Buzzer is now locked; hide the host buzz button.
+  hide('btn-host-buzz');
+  // If the host won the buzz, let them answer on the big screen.
+  if (isParticipant && playerId === hostPlayerId) {
+    enableHostAnswering();
+  }
 }
 
 function handleAnswerResult(msg: ServerAnswerResultMsg): void {
   const { correct, correctAnswerId, outcome, teamIndex } = msg.payload;
+
+  // Stop any host buzz/answer interaction for this question.
+  disableHostInteraction();
 
   // Capture old teams before updating for animation
   const oldTeams = teams.map(t => ({ ...t, runners: [...t.runners] as [boolean, boolean, boolean] }));
@@ -241,6 +277,13 @@ function handlePassToOther(msg: ServerPassToOtherMsg): void {
     `${i('passToOther')} ${i('team')} ${String.fromCharCode(65 + msg.payload.teamIndex)}`;
   $('timer-fill').style.width = '100%';
   $('timer-fill').classList.remove('urgent');
+
+  // If it was passed to the host's team, let them answer.
+  if (isParticipant && msg.payload.teamIndex === hostTeamIndex) {
+    enableHostAnswering();
+  } else {
+    canAnswer = false;
+  }
 }
 
 function handleGameOver(msg: ServerGameOverMsg): void {
@@ -279,6 +322,39 @@ function handleSavedGames(_msg: ServerSavedGamesMsg): void {
   // Could show a resume dialog, for now just log
 }
 
+function handleHostJoined(msg: ServerHostJoinedMsg): void {
+  const player = msg.payload.player;
+  const checkbox = $('cfg-host-play') as HTMLInputElement;
+  if (player) {
+    hostPlayerId = player.id;
+    hostTeamIndex = player.teamIndex;
+    isParticipant = true;
+  } else {
+    hostPlayerId = null;
+    hostTeamIndex = -1;
+    isParticipant = false;
+    // Join may have failed (game full / started) — reflect that in the checkbox
+    checkbox.checked = false;
+  }
+}
+
+/** Enable host answer-choice clicking when it's the host player's turn. */
+function enableHostAnswering(): void {
+  canAnswer = true;
+  $('answer-choices').querySelectorAll('.answer-choice').forEach(el => {
+    el.classList.add('answerable');
+  });
+}
+
+/** Disable all host buzz/answer interaction (e.g. on result). */
+function disableHostInteraction(): void {
+  canAnswer = false;
+  hide('btn-host-buzz');
+  $('answer-choices').querySelectorAll('.answer-choice').forEach(el => {
+    el.classList.remove('answerable');
+  });
+}
+
 // ─── Rendering ───
 
 function drawField(): void {
@@ -313,6 +389,13 @@ function renderTeams(): void {
       const div = document.createElement('div');
       div.className = 'player-name';
       div.textContent = p.name;
+      if (p.isHost) {
+        div.classList.add('is-host');
+        const badge = document.createElement('span');
+        badge.className = 'host-badge';
+        badge.textContent = '👑';
+        div.prepend(badge);
+      }
       col.appendChild(div);
     }
     container.appendChild(col);
@@ -429,10 +512,32 @@ function init(): void {
   $('btn-lang-toggle').addEventListener('click', toggleLang);
   $('btn-lang-toggle-game').addEventListener('click', toggleLang);
 
+  // Host-as-player toggle
+  const hostPlayCheckbox = $('cfg-host-play') as HTMLInputElement;
+  hostPlayCheckbox.addEventListener('change', () => {
+    if (hostPlayCheckbox.checked) {
+      const nameInput = $('host-player-name') as HTMLInputElement;
+      const name = nameInput.value.trim() || i('host');
+      send(createMessage('host:joinAsPlayer', { name }));
+    } else {
+      send(createMessage('host:leaveAsPlayer', {}));
+    }
+  });
+
   // Start game
   $('btn-start').addEventListener('click', () => {
     readConfigFromUI();
+    // Lock host participation once the game is underway.
+    hostPlayCheckbox.disabled = true;
+    ($('host-player-name') as HTMLInputElement).disabled = true;
     send(createMessage('host:start', {}));
+  });
+
+  // Host buzzes in from the big screen
+  $('btn-host-buzz').addEventListener('click', () => {
+    if (!isParticipant) return;
+    ($('btn-host-buzz') as HTMLButtonElement).disabled = true;
+    send(createMessage('player:buzz', { clientTimestamp: Date.now() }));
   });
 
   // Next question / advance
@@ -446,6 +551,15 @@ function init(): void {
     loadConfigToUI();
     teams = [];
     gameId = '';
+    // Reset host participation for the fresh game.
+    hostPlayerId = null;
+    hostTeamIndex = -1;
+    isParticipant = false;
+    canAnswer = false;
+    (hostPlayCheckbox as HTMLInputElement).checked = false;
+    hostPlayCheckbox.disabled = false;
+    const hostNameInput = $('host-player-name') as HTMLInputElement;
+    hostNameInput.disabled = false;
     connect();
   });
 
@@ -484,7 +598,10 @@ function updateAllLabels(): void {
   $('btn-lang-toggle-game').textContent = lang === 'zh' ? 'EN' : '中';
   $('gameover-title').textContent = i('gameOver');
   $('btn-new-game').textContent = i('newGame');
-  $('btn-next').textContent = '下一題';
+  $('btn-next').textContent = lang === 'zh' ? '下一題' : 'Next';
+  $('host-play-text').textContent = i('hostJoinAsPlayer');
+  ($('host-player-name') as HTMLInputElement).placeholder = i('host');
+  $('btn-host-buzz').textContent = i('buzz');
   $('settings-title').textContent = i('settings');
   $('btn-save-config').textContent = i('save');
   $('btn-reset-config').textContent = i('reset');

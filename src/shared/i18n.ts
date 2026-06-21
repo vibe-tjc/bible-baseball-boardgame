@@ -43,6 +43,8 @@ export interface I18nMessages {
   newGame: string;
   questionOf: string;
   runs: string;
+  hostJoinAsPlayer: string;
+  host: string;
 }
 
 const zh: I18nMessages = {
@@ -90,6 +92,8 @@ const zh: I18nMessages = {
   newGame: '新遊戲',
   questionOf: '題',
   runs: '分',
+  hostJoinAsPlayer: '主持人也參與',
+  host: '主持人',
 };
 
 const en: I18nMessages = {
@@ -137,6 +141,8 @@ const en: I18nMessages = {
   newGame: 'New Game',
   questionOf: 'of',
   runs: 'runs',
+  hostJoinAsPlayer: 'Join as Player',
+  host: 'Host',
 };
 
 export const messages: Record<'zh' | 'en', I18nMessages> = { zh, en };
